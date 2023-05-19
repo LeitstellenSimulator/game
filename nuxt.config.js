@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "leitstellensimulator",
+    title: "Leitstellen Simulator",
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
@@ -12,7 +12,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ["assets/main.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -44,8 +44,16 @@ export default {
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
+    meta: {
+      theme_color: "#dc2626",
+      mobileApp: true,
+      mobileAppIOS: true,
+    },
     manifest: {
-      lang: "en",
+      name: "Leitstellen Simulator",
+      short_name: "LSS",
+      display: "standalone",
+      lang: "de",
     },
   },
 
