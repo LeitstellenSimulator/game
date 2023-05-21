@@ -1,0 +1,6 @@
+export enum MissionState {
+  ALERTED = "ALERTED",
+  DISPATCHED = "DISPATCHED",
+  ARRIVED = "ARRIVED",
+  MISSING_VEHICLE = "MISSING_VEHICLE",
+}

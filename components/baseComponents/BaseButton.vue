@@ -1,7 +1,7 @@
 <template>
   <button
     class="btn"
-    :class="'btn-' + variant"
+    :class="'btn-' + variant + ' btn-' + size"
     :disabled="disabled"
     :type="type"
     @click="$emit('click', $event)"
@@ -23,6 +23,10 @@ export default defineComponent({
     type: {
       type: String,
       default: "button",
+    },
+    size: {
+      type: String,
+      default: "",
     },
     disabled: {
       type: Boolean,
@@ -59,5 +63,13 @@ export default defineComponent({
   @apply border-slate-600 bg-transparent text-slate-900
   hover:bg-slate-600 hover:text-slate-50
   disabled:bg-slate-400 disabled:border-slate-400 disabled:text-slate-50;
+}
+
+.btn.btn-sm {
+  @apply p-1 text-sm;
+}
+
+.btn.btn-lg {
+  @apply p-3 text-lg;
 }
 </style>
