@@ -1,16 +1,17 @@
 import { MissionState } from "~/enums/MissionState";
 import { MissionMessageType } from "~/enums/MissionMessageType";
 
-export type MissionMessage = Object & {
+export type MissionMessage = {
   type: MissionMessageType;
   message: string;
 };
 
-export type Mission = Object & {
+export type Mission = {
   id: string;
+  isActive: boolean;
   name: string;
   state: MissionState;
-  duration: Number;
-  current: Number;
-  messages: MissionMessage[];
+  duration: number;
+  estimatedEnd: string;
+  messages: [] | MissionMessage[];
 };

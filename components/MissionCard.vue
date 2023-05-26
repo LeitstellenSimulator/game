@@ -4,7 +4,7 @@
       <h3>{{ mission.name }}</h3>
       <base-progress
         :max="mission.duration"
-        :value="mission.current"
+        :value="current"
         :animate="makeAnimate()"
         :variant="makeVariant()"
       />
@@ -31,7 +31,7 @@ import { defineComponent } from "vue";
 import { MissionState } from "~/enums/MissionState";
 import { Mission } from "~/types/mission";
 import { MissionMessageType } from "~/enums/MissionMessageType";
-import BaseButton from "~/components/baseComponents/BaseButton.vue";
+import { calcDuration } from "~/lib/duration";
 
 export default defineComponent({
   name: "MissionCard",
@@ -43,8 +43,7 @@ export default defineComponent({
           id: "00000000-0000-0000-0000-000000000000",
           state: MissionState.ALERTED,
           name: "Muster Einsatz",
-          duration: 3600,
-          current: 3000,
+          estimatedEnd: "2023-05-26T19:00:00.000Z",
           messages: [],
         } as Mission;
       },
@@ -53,13 +52,20 @@ export default defineComponent({
   data() {
     return {
       animate: false,
+      interval: null as any,
+      current: calcDuration(this.mission.estimatedEnd),
     };
   },
 
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
+
+  created() {
+    this.setupInterval();
+  },
+
   methods: {
-    BaseButton() {
-      return BaseButton;
-    },
     makeVariant(): String {
       switch (this.mission.state) {
         case MissionState.ALERTED:
@@ -73,7 +79,7 @@ export default defineComponent({
           return "primary";
       }
     },
-    makeAnimate(): Boolean {
+    makeAnimate() {
       switch (this.mission.state) {
         case MissionState.ARRIVED:
           return true;
@@ -93,6 +99,15 @@ export default defineComponent({
         default:
           return "secondary";
       }
+    },
+
+    setupInterval() {
+      if (this.mission.state !== MissionState.ARRIVED && !this.mission.isActive)
+        return;
+
+      this.interval = setInterval(() => {
+        this.current = calcDuration(this.mission.estimatedEnd);
+      }, 5000);
     },
   },
 });

@@ -43,7 +43,7 @@ export default defineComponent({
 }
 
 .progressbar .progress {
-  @apply h-full;
+  @apply h-full transition-all duration-500;
 
   width: var(--width);
   background-size: 30px 30px;
