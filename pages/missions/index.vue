@@ -36,12 +36,7 @@ export default defineComponent({
           name: "Muster Einsatz",
           duration: 3600,
           current: 3000,
-          messages: [
-            {
-              type: MissionMessageType.ERROR,
-              message: "Error",
-            },
-          ],
+          messages: [],
         },
         {
           id: "00000000-0000-0000-0000-000000000002",
@@ -49,12 +44,7 @@ export default defineComponent({
           name: "Muster Einsatz",
           duration: 3600,
           current: 3000,
-          messages: [
-            {
-              type: MissionMessageType.HINT,
-              message: "Hint",
-            },
-          ],
+          messages: [],
         },
         {
           id: "00000000-0000-0000-0000-000000000003",
@@ -64,8 +54,16 @@ export default defineComponent({
           current: 3000,
           messages: [
             {
-              type: MissionMessageType.SUCCESS,
-              message: "Success",
+              type: MissionMessageType.ERROR,
+              message: "Fehlende Fahrzeuge: LF20",
+            },
+            {
+              type: MissionMessageType.ERROR,
+              message: "Fehlende Fahrzeuge: DLK23",
+            },
+            {
+              type: MissionMessageType.ERROR,
+              message: "Fehlende Fahrzeuge: TSF/16/45",
             },
           ],
         },

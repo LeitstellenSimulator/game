@@ -1,14 +1,28 @@
 <template>
   <base-card class="mission-card">
-    <p>{{ mission.name }}</p>
-    <base-progress
-      :max="mission.duration"
-      :value="mission.current"
-      :animate="makeAnimate()"
-      :variant="makeVariant()"
-    />
-    <br />
-    <base-button size="sm">Details</base-button>
+    <div>
+      <h3>{{ mission.name }}</h3>
+      <base-progress
+        :max="mission.duration"
+        :value="mission.current"
+        :animate="makeAnimate()"
+        :variant="makeVariant()"
+      />
+    </div>
+
+    <div v-if="mission.messages.length > 0" class="alerts">
+      <base-alert
+        v-for="(message, i) of mission.messages"
+        :key="`${mission.id}-${i}`"
+        :variant="makeMessageVariant(message)"
+      >
+        <p>{{ message.message }}</p>
+      </base-alert>
+    </div>
+
+    <base-button size="sm" class="w-fit">
+      <nuxt-link :to="`/missions/${mission.id}`">Details</nuxt-link>
+    </base-button>
   </base-card>
 </template>
 
@@ -16,6 +30,8 @@
 import { defineComponent } from "vue";
 import { MissionState } from "~/enums/MissionState";
 import { Mission } from "~/types/mission";
+import { MissionMessageType } from "~/enums/MissionMessageType";
+import BaseButton from "~/components/baseComponents/BaseButton.vue";
 
 export default defineComponent({
   name: "MissionCard",
@@ -41,6 +57,9 @@ export default defineComponent({
   },
 
   methods: {
+    BaseButton() {
+      return BaseButton;
+    },
     makeVariant(): String {
       switch (this.mission.state) {
         case MissionState.ALERTED:
@@ -62,12 +81,33 @@ export default defineComponent({
           return false;
       }
     },
+
+    makeMessageVariant(message: any) {
+      switch (message.type) {
+        case MissionMessageType.ERROR:
+          return "primary";
+        case MissionMessageType.HINT:
+          return "warning";
+        case MissionMessageType.SUCCESS:
+          return "success";
+        default:
+          return "secondary";
+      }
+    },
   },
 });
 </script>
 
 <style scoped>
 .mission-card {
-  @apply max-w-sm w-80;
+  @apply max-w-sm w-80 flex flex-col gap-2 justify-between;
+}
+
+h3 {
+  @apply text-2xl mb-2;
+}
+
+.alerts {
+  @apply flex flex-col gap-1;
 }
 </style>
